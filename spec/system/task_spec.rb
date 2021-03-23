@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Task', type: :system do
   let(:project) { create(:project) }
   let(:task) { create(:task) }
+  let!(:task) { create(:task)}
   describe 'Task一覧' do
     context '正常系' do
 
@@ -93,7 +94,6 @@ RSpec.describe 'Task', type: :system do
     context '正常系' do
       # FIXME: テストが失敗するので修正してください
       it 'Taskが削除されること' do
-        task = create(:task)
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
