@@ -18,7 +18,7 @@ RSpec.describe 'Task', type: :system do
         # FIXME: テストが失敗するので修正してください
         visit project_path(project)
         click_link 'View Todos'
-        switch_to_windo(windows.last)
+        switch_to_window(windows.last)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
         expect(current_path).to eq project_tasks_path(project)
@@ -78,7 +78,8 @@ RSpec.describe 'Task', type: :system do
 
       it '既にステータスが完了のタスクのステータスを変更した場合、Taskの完了日が更新されないこと' do
         # TODO: FactoryBotのtraitを利用してください
-        visit edit_project_task_path(project, task)
+        done = create(:task, :done)
+        visit edit_project_task_path(project, done)
         select 'todo', from: 'Status'
         click_button 'Update Task'
         expect(page).to have_content('todo')
@@ -92,7 +93,8 @@ RSpec.describe 'Task', type: :system do
     context '正常系' do
       # FIXME: テストが失敗するので修正してください
       it 'Taskが削除されること' do
-        let!(:task) { create(:task)}
+        # let!(:task) { create(:task)}
+        task = create(:task)
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
