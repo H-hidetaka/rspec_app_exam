@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
-  let(:project) { FactoryBot.create(:project) }
-  let(:task) { FactoryBot.create(:task) }
+  let(:project) { create(:project) }
+  let(:task) { create(:task) }
   describe 'Task一覧' do
     context '正常系' do
 
@@ -18,6 +18,7 @@ RSpec.describe 'Task', type: :system do
         # FIXME: テストが失敗するので修正してください
         visit project_path(project)
         click_link 'View Todos'
+        switch_to_windo(windows.last)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
         expect(current_path).to eq project_tasks_path(project)
